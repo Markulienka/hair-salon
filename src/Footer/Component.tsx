@@ -1,33 +1,93 @@
-import { getCachedGlobal } from '@/utilities/getGlobals'
-import Link from 'next/link'
-import React from 'react'
-
 import type { Footer } from '@/payload-types'
 
-import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 import { CMSLink } from '@/components/Link'
-import { Logo } from '@/components/Logo/Logo'
+
+import { Facebook, Instagram, Youtube } from 'lucide-react'
+
+const socialIcons = {
+  facebook: <Facebook className="w-5 h-5" />,
+  instagram: <Instagram className="w-5 h-5" />,
+  youtube: <Youtube className="w-5 h-5" />,
+}
 
 export async function Footer() {
-  const footerData: Footer = await getCachedGlobal('footer', 1)()
+  const footerData = await getCachedGlobal('footer', 1)() as Footer
 
-  const navItems = footerData?.navItems || []
+  if (!footerData) return null
 
   return (
-    <footer className="mt-auto border-t border-border bg-black dark:bg-card text-white">
-      <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
-        <Link className="flex items-center" href="/">
-          <Logo />
-        </Link>
+    <footer className="mt-auto border-t border-border bg-black text-white">
+      <div className="container py-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="space-y-4">
+            {footerData.contactInfo?.address && (
+              <div
+                className="text-gray-400 space-y-1 whitespace-pre-line"
+                dangerouslySetInnerHTML={{ __html: footerData.contactInfo.address.replace(/\n/g, '<br />') }}
+              />
+            )}
+            <div className="text-gray-400 space-y-1">
+              {footerData.contactInfo?.phone && (
+                <p>
+                  <a
+                    href={`tel:${footerData.contactInfo.phone}`}
+                    className="hover:text-white transition-colors"
+                  >
+                    {footerData.contactInfo.phone}
+                  </a>
+                </p>
+              )}
+              {footerData.contactInfo?.email && (
+                <p>
+                  <a
+                    href={`mailto:${footerData.contactInfo.email}`}
+                    className="hover:text-white transition-colors"
+                  >
+                    {footerData.contactInfo.email}
+                  </a>
+                </p>
+              )}
+            </div>
+          </div>
 
-        <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">
-          <ThemeSelector />
-          <nav className="flex flex-col md:flex-row gap-4">
-            {navItems.map(({ link }, i) => {
-              return <CMSLink className="text-white" key={i} {...link} />
-            })}
-          </nav>
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Quick Links</h3>
+            <nav className="flex flex-col space-y-2">
+              {footerData.navItems?.map(({ link }, i) => (
+                <CMSLink
+                  className="text-gray-400 hover:text-white transition-colors"
+                  key={i}
+                  {...link}
+                />
+              ))}
+            </nav>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Follow Us</h3>
+            <div className="flex space-x-4">
+              {footerData.socialLinks?.map((social, i) => (
+                <a
+                  key={i}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors"
+                  aria-label={social.platform}
+                >
+                  {socialIcons[social.platform]}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
+
+        {footerData.copyright && (
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+            <p>{footerData.copyright.replace('{year}', new Date().getFullYear().toString())}</p>
+          </div>
+        )}
       </div>
     </footer>
   )

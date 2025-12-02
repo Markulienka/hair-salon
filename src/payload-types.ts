@@ -108,6 +108,7 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
+  fallbackLocale: null;
   globals: {
     header: Header;
     footer: Footer;
@@ -157,7 +158,8 @@ export interface Page {
   id: string;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'hero8';
+    title?: string | null;
     richText?: {
       root: {
         type: string;
@@ -192,14 +194,104 @@ export interface Page {
             /**
              * Choose how the link should be rendered.
              */
-            appearance?: ('default' | 'outline') | null;
+            appearance?: ('default' | 'outline' | 'secondary' | 'ghost' | 'link' | 'destructive') | null;
           };
           id?: string | null;
         }[]
       | null;
     media?: (string | null) | Media;
+    media2?: (string | null) | Media;
+    media3?: (string | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout?:
+    | (
+        | CallToActionBlock
+        | ContentBlock
+        | MediaBlock
+        | ArchiveBlock
+        | FormBlock
+        | {
+            title: string;
+            subtitle: string;
+            whatsIncluded: {
+              title: string;
+              services: {
+                title: string;
+                price: string;
+                id?: string | null;
+              }[];
+              id?: string | null;
+            }[];
+            button: {
+              label: string;
+              link: string;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'services';
+          }
+        | {
+            title: string;
+            subtitle: string;
+            image: string | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'feature';
+          }
+        | {
+            title: string;
+            subtitle: string;
+            subsubtitle: string;
+            links?:
+              | {
+                  link: {
+                    type?: ('reference' | 'custom') | null;
+                    newTab?: boolean | null;
+                    reference?:
+                      | ({
+                          relationTo: 'pages';
+                          value: string | Page;
+                        } | null)
+                      | ({
+                          relationTo: 'posts';
+                          value: string | Post;
+                        } | null);
+                    url?: string | null;
+                    label: string;
+                    /**
+                     * Choose how the link should be rendered.
+                     */
+                    appearance?: ('default' | 'outline' | 'secondary' | 'ghost' | 'link' | 'destructive') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'viewServices';
+          }
+        | {
+            title: string;
+            subtitle?: string | null;
+            email: string;
+            place: string;
+            address: string;
+            image: string | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contact';
+          }
+        | {
+            items: {
+              image: string | Media;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'carousel';
+          }
+      )[]
+    | null;
   meta?: {
     title?: string | null;
     /**
@@ -525,7 +617,7 @@ export interface ContentBlock {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'outline') | null;
+          appearance?: ('default' | 'outline' | 'secondary' | 'ghost' | 'link' | 'destructive') | null;
         };
         id?: string | null;
       }[]
@@ -1060,6 +1152,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
+        title?: T;
         richText?: T;
         links?:
           | T
@@ -1077,6 +1170,8 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        media2?: T;
+        media3?: T;
       };
   layout?:
     | T
@@ -1086,6 +1181,90 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        services?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              whatsIncluded?:
+                | T
+                | {
+                    title?: T;
+                    services?:
+                      | T
+                      | {
+                          title?: T;
+                          price?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              button?:
+                | T
+                | {
+                    label?: T;
+                    link?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        feature?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
+        viewServices?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              subsubtitle?: T;
+              links?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        contact?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              email?: T;
+              place?: T;
+              address?: T;
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
+        carousel?:
+          | T
+          | {
+              items?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
@@ -1683,6 +1862,25 @@ export interface Footer {
         id?: string | null;
       }[]
     | null;
+  contactInfo: {
+    /**
+     * Address information (supports multiple lines)
+     */
+    address: string;
+    phone: string;
+    email: string;
+  };
+  socialLinks?:
+    | {
+        platform: 'facebook' | 'instagram' | 'youtube';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Use {year} to automatically insert the current year
+   */
+  copyright?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1728,6 +1926,21 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  contactInfo?:
+    | T
+    | {
+        address?: T;
+        phone?: T;
+        email?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  copyright?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

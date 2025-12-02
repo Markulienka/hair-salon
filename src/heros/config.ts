@@ -35,8 +35,20 @@ export const hero: Field = {
           label: 'Low Impact',
           value: 'lowImpact',
         },
+        {
+          label: 'Hero 8',
+          value: 'hero8',
+        },
       ],
       required: true,
+    },
+    {
+      name: 'title',
+      type: 'text',
+      label: 'Title',
+      admin: {
+        condition: (_, { type } = {}) => type === 'hero8',
+      },
     },
     {
       name: 'richText',
@@ -62,10 +74,29 @@ export const hero: Field = {
       name: 'media',
       type: 'upload',
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact', 'hero8'].includes(type),
       },
       relationTo: 'media',
       required: true,
+      label: 'Image 1',
+    },
+    {
+      name: 'media2',
+      type: 'upload',
+      admin: {
+        condition: (_, { type } = {}) => type === 'hero8',
+      },
+      relationTo: 'media',
+      label: 'Image 2',
+    },
+    {
+      name: 'media3',
+      type: 'upload',
+      admin: {
+        condition: (_, { type } = {}) => type === 'hero8',
+      },
+      relationTo: 'media',
+      label: 'Image 3',
     },
   ],
   label: false,
