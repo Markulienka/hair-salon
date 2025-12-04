@@ -16,9 +16,13 @@ const nextConfig = {
         return {
           hostname: url.hostname,
           protocol: url.protocol.replace(':', ''),
+          // pathname: '/api/media/file/*',
         }
-      }),
+      }),    
     ],
+     ...(process.env.NODE_ENV === 'development' ? {
+      unoptimized: true,
+    } : {}),
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
