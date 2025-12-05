@@ -1,95 +1,169 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import Link from 'next/link'
+import { Menu, X } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
+import { CMSLink } from "@/components/Link";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 import type { Header as HeaderType } from '@/payload-types'
 
-import { CMSLink } from '@/components/Link'
-import { SearchIcon } from 'lucide-react'
-
 export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const navItems = data?.navItems || []
+  const navItems = data?.navItems || [];
+  const [activeItem, setActiveItem] = useState(navItems[0]?.link.label || "");
 
-  const toggleMenu = () => setIsOpen(!isOpen)
+  const indicatorRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    const updateIndicator = () => {
+      const activeEl = document.querySelector(
+        `[data-nav-item="${activeItem}"]`,
+      ) as HTMLElement;
+
+      if (activeEl && indicatorRef.current && menuRef.current) {
+        const menuRect = menuRef.current.getBoundingClientRect();
+        const itemRect = activeEl.getBoundingClientRect();
+
+        indicatorRef.current.style.width = `${itemRect.width}px`;
+        indicatorRef.current.style.left = `${itemRect.left - menuRect.left}px`;
+      }
+    };
+    updateIndicator();
+    window.addEventListener("resize", updateIndicator);
+
+    return () => window.removeEventListener("resize", updateIndicator);
+  }, [activeItem]);
 
   return (
-    <>
-      <div className="z-50 flex justify-end w-full">
-        <button
-          onClick={toggleMenu}
-          className="text-black hover:text-gray-700 text-lg tracking-wider transition-colors"
-        >
-          <AnimatePresence mode="wait">
-            <motion.span
-              key={isOpen ? 'close' : 'menu'}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.2, ease: 'easeInOut' }}
-            >
-              {isOpen ? 'CLOSE' : 'MENU'}
-            </motion.span>
-          </AnimatePresence>
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="bg-white fixed inset-0 z-40 overflow-hidden w-full"
+    <section className="py-4">
+      <nav className="container flex items-center justify-between">
+        <NavigationMenu className="hidden lg:block">
+          <NavigationMenuList
+            ref={menuRef}
+            className="rounded-4xl flex items-center gap-6 px-8 py-3"
           >
-            <div className="flex h-full flex-col items-center justify-center px-6">
-              <motion.div
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.1, duration: 0.5 }}
-                className="mb-16 text-center"
-              >
-                {navItems.map(({ link }, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ y: 30, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.2 + index * 0.1, duration: 0.4 }}
-                    className="mb-5"
+            {navItems.map((item) => (
+              <React.Fragment key={item.link.label}>
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    asChild
+                    data-nav-item={item.link.label}
+                    onClick={() => setActiveItem(item.link.label)}
+                    className={`relative cursor-pointer text-sm font-medium hover:bg-transparent ${activeItem === item.link.label
+                      ? "text-black"
+                      : "text-black/70"
+                      }`}
                   >
-                    <div className="group relative inline-block" onClick={toggleMenu}>
-                      <motion.div
-                        className="text-black relative z-10 text-4xl font-black uppercase transition-transform duration-300 md:text-6xl lg:text-7xl"
-                        initial={{ opacity: 1, filter: 'blur(0px)' }}
-                        whileHover={{ opacity: 0.8, filter: 'blur(6px)' }}
-                        transition={{ duration: 0.3, ease: 'easeInOut' }}
-                      >
-                        <CMSLink {...link} appearance="link" className="text-black" />
-                      </motion.div>
-
-                      <motion.div
-                        className="bg-black absolute bottom-0 left-0 h-1"
-                        initial={{ width: 0 }}
-                        whileHover={{ width: '100%' }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-              <motion.div
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.7, duration: 0.5 }}
-              >
-              </motion.div>
+                    <CMSLink {...item.link} appearance="link" />
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              </React.Fragment>
+            ))}
+            {/* Active Indicator */}
+            <div
+              ref={indicatorRef}
+              className="absolute bottom-2 flex h-1 items-center justify-center px-2 transition-all duration-300"
+            >
+              <div className="bg-black h-0.5 w-full rounded-t-none transition-all duration-300" />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  )
-}
+          </NavigationMenuList>
+        </NavigationMenu>
+
+        {/* Mobile Menu Popover */}
+        <MobileNav navItems={navItems} activeItem={activeItem} setActiveItem={setActiveItem} />
+
+        <div className="hidden items-center gap-2 lg:flex">
+          <Link href="/order">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 py-2.5 text-sm font-normal bg-black text-white border-black hover:bg-black/90 hover:text-white"
+            >
+              Rezervovať
+            </Button>
+          </Link>
+        </div>
+      </nav>
+    </section>
+  );
+};
+
+const AnimatedHamburger = ({ isOpen }: { isOpen: boolean }) => {
+  return (
+    <div className="group relative size-full">
+      <div className="absolute flex size-full items-center justify-center">
+        <Menu
+          className={`text-black/70 group-hover:text-black absolute size-6 transition-all duration-300 ${isOpen ? "rotate-90 opacity-0" : "rotate-0 opacity-100"
+            }`}
+        />
+        <X
+          className={`text-black/70 group-hover:text-black absolute size-6 transition-all duration-300 ${isOpen ? "rotate-0 opacity-100" : "-rotate-90 opacity-0"
+            }`}
+        />
+      </div>
+    </div>
+  );
+};
+
+const MobileNav = ({
+  navItems,
+  activeItem,
+  setActiveItem,
+}: {
+  navItems: HeaderType['navItems'];
+  activeItem: string;
+  setActiveItem: (item: string) => void;
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="block flex h-full items-center lg:hidden">
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
+        <PopoverTrigger asChild>
+          <Button variant="ghost" size="icon">
+            <AnimatedHamburger isOpen={isOpen} />
+          </Button>
+        </PopoverTrigger>
+
+        <PopoverContent
+          align="end"
+          className="relative -right-4 top-4 block w-[calc(100vw-32px)] overflow-hidden rounded-xl p-0 sm:right-auto sm:top-auto sm:w-80 lg:hidden"
+        >
+          <ul className="bg-background text-foreground w-full py-4">
+            {navItems?.map((navItem, idx) => (
+              <li key={idx}>
+                <div
+                  onClick={() => setActiveItem(navItem.link.label)}
+                  className={`text-foreground flex items-center border-l-[3px] px-6 py-4 text-sm font-medium transition-all duration-75 ${activeItem === navItem.link.label
+                    ? "border-foreground text-foreground"
+                    : "text-muted-foreground hover:text-foreground border-transparent"
+                    }`}
+                >
+                  <CMSLink {...navItem.link} appearance="link" />
+                </div>
+              </li>
+            ))}
+            <li className="flex flex-col px-7 py-2">
+              <Link href="/order" className="w-full">
+                <Button variant="outline" className="w-full bg-black text-white border-black hover:bg-black/90 hover:text-white">Rezervovať</Button>
+              </Link>
+            </li>
+          </ul>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+};

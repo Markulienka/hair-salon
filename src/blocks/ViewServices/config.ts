@@ -19,6 +19,12 @@ export const ViewServices: Block = {
             type: 'textarea',
             required: true,
         },
+        {
+            name: 'image',
+            type: 'upload',
+            relationTo: 'media',
+            required: true,
+        },
         linkGroup({
             overrides: {
                 maxRows: 1,

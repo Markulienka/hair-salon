@@ -12,6 +12,7 @@ import { FeatureBlock } from '@/blocks/Feature/Component'
 import { ViewServicesBlock } from '@/blocks/ViewServices/Component'
 import { ContactBlock } from '@/blocks/Contact/Component'
 import { CarouselBlock } from '@/blocks/Carousel/Component'
+import { GalleryBlock } from './Gallery/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -24,6 +25,7 @@ const blockComponents = {
   viewServices: ViewServicesBlock,
   contact: ContactBlock,
   carousel: CarouselBlock,
+  gallery: GalleryBlock,
 }
 
 export const RenderBlocks: React.FC<{

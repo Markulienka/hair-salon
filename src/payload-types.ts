@@ -242,6 +242,7 @@ export interface Page {
             title: string;
             subtitle: string;
             subsubtitle: string;
+            image: string | Media;
             links?:
               | {
                   link: {
@@ -290,6 +291,7 @@ export interface Page {
             blockName?: string | null;
             blockType: 'carousel';
           }
+        | GalleryBlock
       )[]
     | null;
   meta?: {
@@ -872,6 +874,26 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryBlock".
+ */
+export interface GalleryBlock {
+  title: string;
+  subtitle?: string | null;
+  caption: {
+    image: string | Media;
+    label: string;
+    link: string;
+  };
+  items: {
+    image: string | Media;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'gallery';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1223,6 +1245,7 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               subtitle?: T;
               subsubtitle?: T;
+              image?: T;
               links?:
                 | T
                 | {
@@ -1265,6 +1288,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        gallery?: T | GalleryBlockSelect<T>;
       };
   meta?:
     | T
@@ -1361,6 +1385,29 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryBlock_select".
+ */
+export interface GalleryBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  caption?:
+    | T
+    | {
+        image?: T;
+        label?: T;
+        link?: T;
+      };
+  items?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

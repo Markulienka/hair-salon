@@ -12,6 +12,7 @@ import { Feature } from '../../blocks/Feature/config'
 import { ViewServices } from '../../blocks/ViewServices/config'
 import { Contact } from '../../blocks/Contact/config'
 import { Carousel } from '../../blocks/Carousel/config'
+import { Gallery } from '../../blocks/Gallery/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -88,6 +89,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 ViewServices,
                 Contact,
                 Carousel,
+                Gallery,
               ],
               required: false,
               admin: {
