@@ -269,7 +269,7 @@ export interface Page {
               | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'viewServices';
+            blockType: 'view';
           }
         | {
             title: string;
@@ -1239,7 +1239,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        viewServices?:
+        view?:
           | T
           | {
               title?: T;

@@ -52,7 +52,7 @@ export async function Footer() {
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Quick Links</h3>
+            <h3 className="text-lg font-semibold">Rýchle Odkazy</h3>
             <nav className="flex flex-col space-y-2">
               {footerData.navItems?.map(({ link }, i) => (
                 <CMSLink
@@ -65,7 +65,7 @@ export async function Footer() {
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Follow Us</h3>
+            <h3 className="text-lg font-semibold">Sleduj nás</h3>
             <div className="flex space-x-4">
               {footerData.socialLinks?.map((social, i) => (
                 <a

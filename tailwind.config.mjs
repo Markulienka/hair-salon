@@ -49,8 +49,9 @@ const config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        marquee: 'marquee var(--duration) linear infinite',
-        'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
+
+        marquee: 'marquee 20s linear infinite',
+        'marquee-vertical': 'marquee-vertical 20s linear infinite',
       },
       borderRadius: {
         lg: 'var(--radius)',

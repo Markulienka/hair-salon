@@ -1,8 +1,8 @@
 import { Block } from 'payload';
 import { linkGroup } from '@/fields/linkGroup';
 
-export const ViewServices: Block = {
-    slug: 'viewServices',
+export const View: Block = {
+    slug: 'view',
     fields: [
         {
             name: 'title',
@@ -33,4 +33,3 @@ export const ViewServices: Block = {
     ],
 };
 
-export default ViewServices;

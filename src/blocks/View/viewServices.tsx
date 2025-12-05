@@ -2,7 +2,7 @@ import { CMSLink } from '@/components/Link';
 import { Media as MediaType } from '@/payload-types';
 import { Media } from '@/components/Media';
 
-export type ViewServicesLink = {
+export type ViewLink = {
     link: {
         type?: 'reference' | 'custom' | null;
         newTab?: boolean | null;
@@ -16,15 +16,15 @@ export type ViewServicesLink = {
     id?: string | null;
 };
 
-export type ViewServicesProps = {
+export type ViewProps = {
     title: string;
     subtitle: string;
     subsubtitle: string;
     image: string | MediaType;
-    links?: ViewServicesLink[];
+    links?: ViewLink[];
 }
 
-export const ViewServices: React.FC<ViewServicesProps> = ({
+export const View: React.FC<ViewProps> = ({
     title,
     subtitle,
     subsubtitle,

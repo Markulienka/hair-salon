@@ -31,7 +31,7 @@ const Contact8: React.FC<ContactProps> = ({ title, subtitle, email, place, addre
               </div>
             </div>
             <div className="bg-background flex h-full flex-col justify-between gap-6 rounded-md p-6">
-              <p className="text-2xl">Offices</p>
+              <p className="text-2xl">Kde sa nachádzme</p>
               <div className="grid gap-8 md:grid-cols-2 md:gap-4">
                 <div>
                   <p className="text-muted-foreground mb-2 text-xl md:mb-4">

@@ -9,7 +9,7 @@ import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { Services } from '../../blocks/Services/config'
 import { Feature } from '../../blocks/Feature/config'
-import { ViewServices } from '../../blocks/ViewServices/config'
+import { View } from '../../blocks/View/config'
 import { Contact } from '../../blocks/Contact/config'
 import { Carousel } from '../../blocks/Carousel/config'
 import { Gallery } from '../../blocks/Gallery/config'
@@ -86,7 +86,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 FormBlock,
                 Services,
                 Feature,
-                ViewServices,
+                View,
                 Contact,
                 Carousel,
                 Gallery,
