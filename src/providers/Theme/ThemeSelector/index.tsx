@@ -37,17 +37,17 @@ export const ThemeSelector: React.FC = () => {
   }
 
   return (
-    <div className="flex items-center gap-0.5 bg-background/80 backdrop-blur-sm border border-border rounded-full p-1">
+    <div className="flex items-center gap-0.5 bg-background/60 backdrop-blur-sm rounded-full px-0.5 py-[2px] text-[9px] shadow-sm">
       <button onClick={handlePrev} className="p-0.5 hover:opacity-70 transition-opacity">
-        <ChevronLeft className="w-3 h-3 text-inherit" />
+        <ChevronLeft className="w-1.5 h-1.5 text-inherit" />
       </button>
 
-      <span className="text-xs px-2 text-muted-foreground min-w-20 text-center">
+      <span className="px-1 text-muted-foreground min-w-[48px] text-center">
         {value}
       </span>
 
       <button onClick={handleNext} className="p-0.5 hover:opacity-70 transition-opacity">
-        <ChevronRight className="w-3 h-3 text-inherit" />
+        <ChevronRight className="w-1.5 h-1.5 text-inherit" />
       </button>
     </div>
   )

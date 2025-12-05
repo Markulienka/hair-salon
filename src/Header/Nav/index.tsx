@@ -50,7 +50,10 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
 
   return (
     <section className="py-4">
-      <div className="fixed left-4 top-4 z-50">
+      <div className="md:hidden fixed left-1/2 top-4 z-50 -translate-x-1/2">
+        <ThemeSelector />
+      </div>
+      <div className="hidden md:block fixed left-4 top-4 z-50">
         <ThemeSelector />
       </div>
       <nav className="container flex items-center justify-between">
