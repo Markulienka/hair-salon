@@ -23,7 +23,7 @@ export const InitTheme: React.FC = () => {
     }
 
     function themeIsValid(theme) {
-      return theme === 'light' || theme === 'dark'
+      return theme === 'light' || theme === 'dark' || theme === 'clean-slate' || theme === 'amber-minimal'
     }
 
     var themeToSet = '${defaultTheme}'

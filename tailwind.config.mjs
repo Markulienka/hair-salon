@@ -51,9 +51,8 @@ const config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-
-        marquee: 'marquee 20s linear infinite',
-        'marquee-vertical': 'marquee-vertical 20s linear infinite',
+        marquee: 'marquee var(--duration) linear infinite',
+        'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -98,10 +97,13 @@ const config = {
         error: 'hsl(var(--error))',
         warning: 'hsl(var(--warning))',
       },
+
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
         sans: ['var(--font-geist-sans)'],
       },
+
+      // Keyframes sú definované správne a budú spracované Tailwindom
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -120,6 +122,7 @@ const config = {
           to: { transform: 'translateY(calc(-100% - var(--gap)))' },
         },
       },
+
       typography: () => ({
         DEFAULT: {
           css: [
@@ -136,25 +139,16 @@ const config = {
         base: {
           css: [
             {
-              h1: {
-                fontSize: '2.5rem',
-              },
-              h2: {
-                fontSize: '1.25rem',
-                fontWeight: 600,
-              },
+              h1: { fontSize: '2.5rem' },
+              h2: { fontSize: '1.25rem', fontWeight: 600 },
             },
           ],
         },
         md: {
           css: [
             {
-              h1: {
-                fontSize: '3.5rem',
-              },
-              h2: {
-                fontSize: '1.5rem',
-              },
+              h1: { fontSize: '3.5rem' },
+              h2: { fontSize: '1.5rem' },
             },
           ],
         },
