@@ -32,20 +32,20 @@ export const View: React.FC<ViewProps> = ({
     links
 }) => {
     return (
-        <section className="py-16 md:py-24 bg-white">
+        <section className="py-16 md:py-24 bg-background">
             <div className="container px-4 mx-auto">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                         <div className="text-center lg:text-left">
-                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
                                 {title}
                             </h2>
 
-                            <p className="text-base md:text-lg text-gray-500 mb-4">
+                            <p className="text-base md:text-lg text-muted-foreground mb-4">
                                 {subtitle}
                             </p>
 
-                            <p className="text-gray-400 mb-10">
+                            <p className="text-muted-foreground/70 mb-10">
                                 {subsubtitle}
                             </p>
 
@@ -58,7 +58,7 @@ export const View: React.FC<ViewProps> = ({
                                         url={link.url}
                                         newTab={link.newTab}
                                         appearance="default"
-                                        className="inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-full bg-primary text-white hover:bg-primary/90 transition-colors duration-200"
+                                        className="inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200"
                                         label={link.label}
                                     />
                                 ))}

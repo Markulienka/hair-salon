@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
+import { ThemeSelector } from "@/providers/Theme/ThemeSelector";
 import { Button } from "@/components/ui/button";
 import { CMSLink } from "@/components/Link";
 import {
@@ -49,6 +50,9 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
 
   return (
     <section className="py-4">
+      <div className="fixed left-4 top-4 z-50">
+        <ThemeSelector />
+      </div>
       <nav className="container flex items-center justify-between">
         <NavigationMenu className="hidden lg:block">
           <NavigationMenuList
