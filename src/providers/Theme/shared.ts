@@ -14,5 +14,5 @@ export const getImplicitPreference = (): Theme | null => {
   // }
 
   // return null
-  return defaultTheme;
+  return null;
 }
