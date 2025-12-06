@@ -23,7 +23,7 @@ const Gallery29: React.FC<GalleryProps> = ({ title, subtitle, items = [], captio
   if (!items.length || items.length === 0) return null;
 
   return (
-    <section className="bg-background dark relative overflow-hidden py-32">
+    <section className="bg-background relative overflow-hidden py-32">
       <div>
         <div className="container mb-12 flex flex-col gap-4 text-center">
           <h2 className="font-instrumentSerif text-primary/80 text-5xl font-medium">
@@ -55,7 +55,7 @@ const Gallery29: React.FC<GalleryProps> = ({ title, subtitle, items = [], captio
               />
 
               <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 backdrop-blur-[1px] transition-opacity duration-500 group-hover:opacity-100">
-                <p className="font-instrumentSerif -translate-y-6 border-b border-white/50 bg-gradient-to-b from-white to-white/80 bg-clip-text text-xl font-medium text-transparent transition-transform duration-500 group-hover:translate-y-0">
+                <p className="font-instrumentSerif -translate-y-6 border-b border-foreground/50 bg-gradient-to-b from-foreground to-foreground/80 bg-clip-text text-xl font-medium text-transparent transition-transform duration-500 group-hover:translate-y-0">
                   {caption.label}
                 </p>
               </div>

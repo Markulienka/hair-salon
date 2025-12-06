@@ -70,8 +70,8 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
                     data-nav-item={item.link.label}
                     onClick={() => setActiveItem(item.link.label)}
                     className={`relative cursor-pointer text-sm font-medium hover:bg-transparent ${activeItem === item.link.label
-                      ? "text-black"
-                      : "text-black/70"
+                      ? "text-foreground"
+                      : "text-muted-foreground"
                       }`}
                   >
                     <CMSLink {...item.link} appearance="link" />
@@ -84,7 +84,7 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
               ref={indicatorRef}
               className="absolute bottom-2 flex h-1 items-center justify-center px-2 transition-all duration-300"
             >
-              <div className="bg-black h-0.5 w-full rounded-t-none transition-all duration-300" />
+              <div className="bg-foreground h-0.5 w-full rounded-t-none transition-all duration-300" />
             </div>
           </NavigationMenuList>
         </NavigationMenu>
@@ -97,7 +97,7 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
             <Button
               variant="outline"
               size="sm"
-              className="h-10 py-2.5 text-sm font-normal bg-black text-white border-black hover:bg-black/90 hover:text-white"
+              className="h-10 py-2.5 text-sm font-normal bg-primary text-primary-foreground border-primary hover:bg-primary/90"
             >
               Rezervovať
             </Button>
@@ -113,11 +113,11 @@ const AnimatedHamburger = ({ isOpen }: { isOpen: boolean }) => {
     <div className="group relative size-full">
       <div className="absolute flex size-full items-center justify-center">
         <Menu
-          className={`text-black/70 group-hover:text-black absolute size-6 transition-all duration-300 ${isOpen ? "rotate-90 opacity-0" : "rotate-0 opacity-100"
+          className={`text-muted-foreground group-hover:text-foreground absolute size-6 transition-all duration-300 ${isOpen ? "rotate-90 opacity-0" : "rotate-0 opacity-100"
             }`}
         />
         <X
-          className={`text-black/70 group-hover:text-black absolute size-6 transition-all duration-300 ${isOpen ? "rotate-0 opacity-100" : "-rotate-90 opacity-0"
+          className={`text-muted-foreground group-hover:text-foreground absolute size-6 transition-all duration-300 ${isOpen ? "rotate-0 opacity-100" : "-rotate-90 opacity-0"
             }`}
         />
       </div>
@@ -165,7 +165,9 @@ const MobileNav = ({
             ))}
             <li className="flex flex-col px-7 py-2">
               <Link href="/order" className="w-full">
-                <Button variant="outline" className="w-full bg-black text-white border-black hover:bg-black/90 hover:text-white">Rezervovať</Button>
+                <Button variant="outline" className="w-full bg-primary text-primary-foreground border-primary hover:bg-primary/90">
+                  Rezervovať
+                </Button>
               </Link>
             </li>
           </ul>

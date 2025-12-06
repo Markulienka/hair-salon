@@ -17,22 +17,22 @@ export async function Footer() {
   if (!footerData) return null
 
   return (
-    <footer className="mt-auto border-t border-border bg-black text-white">
+    <footer className="mt-auto border-t border-border bg-card text-card-foreground">
       <div className="container py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
             {footerData.contactInfo?.address && (
               <div
-                className="text-gray-400 space-y-1 whitespace-pre-line"
+                className="text-muted-foreground space-y-1 whitespace-pre-line"
                 dangerouslySetInnerHTML={{ __html: footerData.contactInfo.address.replace(/\n/g, '<br />') }}
               />
             )}
-            <div className="text-gray-400 space-y-1">
+            <div className="text-muted-foreground space-y-1">
               {footerData.contactInfo?.phone && (
                 <p>
                   <a
                     href={`tel:${footerData.contactInfo.phone}`}
-                    className="hover:text-white transition-colors"
+                    className="hover:text-foreground transition-colors"
                   >
                     {footerData.contactInfo.phone}
                   </a>
@@ -42,7 +42,7 @@ export async function Footer() {
                 <p>
                   <a
                     href={`mailto:${footerData.contactInfo.email}`}
-                    className="hover:text-white transition-colors"
+                    className="hover:text-foreground transition-colors"
                   >
                     {footerData.contactInfo.email}
                   </a>
@@ -56,7 +56,7 @@ export async function Footer() {
             <nav className="flex flex-col space-y-2">
               {footerData.navItems?.map(({ link }, i) => (
                 <CMSLink
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
                   key={i}
                   {...link}
                 />
@@ -73,7 +73,7 @@ export async function Footer() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
                   aria-label={social.platform}
                 >
                   {socialIcons[social.platform]}
@@ -84,7 +84,7 @@ export async function Footer() {
         </div>
 
         {footerData.copyright && (
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+          <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground text-sm">
             <p>{footerData.copyright.replace('{year}', new Date().getFullYear().toString())}</p>
           </div>
         )}

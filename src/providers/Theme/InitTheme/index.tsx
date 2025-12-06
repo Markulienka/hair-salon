@@ -1,11 +1,10 @@
 import Script from 'next/script'
 import React from 'react'
 
-import { defaultTheme, themeLocalStorageKey } from '../ThemeSelector/types'
+import { themeLocalStorageKey, themeModeLocalStorageKey } from '../types'
 
 export const InitTheme: React.FC = () => {
   return (
-    // eslint-disable-next-line @next/next/no-before-interactive-script-outside-document
     <Script
       dangerouslySetInnerHTML={{
         __html: `
@@ -19,27 +18,30 @@ export const InitTheme: React.FC = () => {
         return mql.matches ? 'dark' : 'light'
       }
 
-      return null
+      return 'light'
     }
 
-    function themeIsValid(theme) {
-      return theme === 'light' || theme === 'dark' || theme === 'clean-slate' || theme === 'amber-minimal'
+    var themeToSet = 'default'
+    var modeToSet = 'light'
+    
+    var savedTheme = window.localStorage.getItem('${themeLocalStorageKey}')
+    var savedMode = window.localStorage.getItem('${themeModeLocalStorageKey}')
+
+    if (savedTheme) {
+      themeToSet = savedTheme
     }
 
-    var themeToSet = '${defaultTheme}'
-    var preference = window.localStorage.getItem('${themeLocalStorageKey}')
-
-    if (themeIsValid(preference)) {
-      themeToSet = preference
+    if (savedMode) {
+      modeToSet = savedMode
     } else {
-      var implicitPreference = getImplicitPreference()
-
-      if (implicitPreference) {
-        themeToSet = implicitPreference
-      }
+      modeToSet = getImplicitPreference()
     }
 
     document.documentElement.setAttribute('data-theme', themeToSet)
+    
+    if (modeToSet === 'dark') {
+      document.documentElement.classList.add('dark')
+    }
   })();
   `,
       }}

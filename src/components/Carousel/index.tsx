@@ -54,14 +54,14 @@ export const Carousel: React.FC<CarouselProps> = ({ items }) => {
 
                     <button
                         onClick={prevSlide}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/75 transition-colors"
+                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/70 text-foreground p-2 rounded-full hover:bg-background/90 transition-colors"
                         aria-label="Previous slide"
                     >
                         &larr;
                     </button>
                     <button
                         onClick={nextSlide}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/75 transition-colors"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/70 text-foreground p-2 rounded-full hover:bg-background/90 transition-colors"
                         aria-label="Next slide"
                     >
                         &rarr;

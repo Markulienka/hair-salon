@@ -1,21 +1,12 @@
 'use client'
 
-import { useEffect } from 'react'
-
 import { Page } from '@/payload-types'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
 
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 
 const Hero8: React.FC<Page['hero']> = ({ title, richText, links, media, media2, media3 }) => {
-  const { setHeaderTheme } = useHeaderTheme()
-
-  useEffect(() => {
-    setHeaderTheme('dark')
-  })
-
   return (
     <section className="py-6">
       <div className="border-muted overflow-hidden border-b w-full">

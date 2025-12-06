@@ -3,7 +3,12 @@ import type { Metadata } from 'next'
 import { cn } from '@/utilities/ui'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
+import { Montserrat, Merriweather, Ubuntu_Mono } from 'next/font/google'
 import React from 'react'
+
+const montserrat = Montserrat({ subsets: ['latin'], variable: '--font-montserrat' })
+const merriweather = Merriweather({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-merriweather' })
+const ubuntuMono = Ubuntu_Mono({ weight: '400', subsets: ['latin'], variable: '--font-ubuntu-mono' })
 
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
@@ -17,7 +22,7 @@ import { getServerSideURL } from '@/utilities/getURL'
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
+    <html className={cn(GeistSans.variable, GeistMono.variable, montserrat.variable, merriweather.variable, ubuntuMono.variable)} lang="en" suppressHydrationWarning>
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />

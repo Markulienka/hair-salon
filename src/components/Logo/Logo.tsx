@@ -1,5 +1,7 @@
+'use client'
+
 import clsx from 'clsx'
-import React from 'react'
+import { useTheme } from '@/providers/Theme'
 
 interface Props {
   className?: string
@@ -9,6 +11,7 @@ interface Props {
 
 export const Logo = (props: Props) => {
   const { loading: loadingFromProps, priority: priorityFromProps, className } = props
+  const { mode } = useTheme()
 
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'
@@ -22,7 +25,11 @@ export const Logo = (props: Props) => {
       loading={loading}
       fetchPriority={priority}
       decoding="async"
-      className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
+      className={clsx(
+        'max-w-[9.375rem] w-full h-[34px] transition-all duration-300',
+        mode === 'dark' ? 'invert' : '',
+        className
+      )}
       src="https://images.squarespace-cdn.com/content/v1/65ab4d7b45211b4f7c319cd8/93ee2a98-2344-4b95-9e65-04b94f595183/AK_%281%29+3.png?format=1500w"
     />
   )
