@@ -1,23 +1,18 @@
 'use client'
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { ThemeContextType, ThemeName, ThemeMode, themeLocalStorageKey, themeModeLocalStorageKey } from './types'
+import { ThemeContextType, ThemeName, themeLocalStorageKey } from './types'
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<ThemeName>('default')
-  const [mode, setModeState] = useState<ThemeMode>('light')
 
   useEffect(() => {
     const savedTheme = window.localStorage.getItem(themeLocalStorageKey) as ThemeName | null
-    const savedMode = window.localStorage.getItem(themeModeLocalStorageKey) as ThemeMode | null
 
     if (savedTheme && ['default', 'clean-slate', 'amber-minimal', 'kodama-grove', 'soft-pop', 'sunset-horizon'].includes(savedTheme)) {
       setThemeState(savedTheme)
-    }
-    if (savedMode && ['light', 'dark'].includes(savedMode)) {
-      setModeState(savedMode)
     }
   }, [])
 
@@ -27,19 +22,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     document.documentElement.setAttribute('data-theme', name)
   }
 
-  const setMode = (newMode: ThemeMode) => {
-    setModeState(newMode)
-    window.localStorage.setItem(themeModeLocalStorageKey, newMode)
-
-    if (newMode === 'dark') {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  }
-
   return (
-    <ThemeContext.Provider value={{ theme, mode, setTheme, setMode }}>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   )

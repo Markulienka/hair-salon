@@ -1,13 +1,11 @@
 'use client'
 
-import { ChevronLeft, ChevronRight, Moon, Sun } from 'lucide-react'
 import React from 'react'
-
 import type { ThemeName } from '../types'
 import { useTheme } from '..'
 
 export const ThemeSelector: React.FC = () => {
-  const { theme, mode, setTheme, setMode } = useTheme()
+  const { theme, setTheme } = useTheme()
 
   const themes: ThemeName[] = ['default', 'clean-slate', 'amber-minimal', 'kodama-grove', 'soft-pop', 'sunset-horizon']
 
@@ -23,39 +21,27 @@ export const ThemeSelector: React.FC = () => {
     setTheme(themes[nextIndex])
   }
 
-  const toggleMode = () => {
-    setMode(mode === 'light' ? 'dark' : 'light')
-  }
+  const themeName = theme.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())
 
   return (
-    <div className="flex items-center gap-2">
-      {/* Theme Selector */}
-      <div className="flex items-center gap-0.5 bg-background/60 backdrop-blur-sm rounded-full px-0.5 py-[2px] text-[9px] shadow-sm">
-        <button onClick={handlePrevTheme} className="p-0.5 hover:opacity-70 transition-opacity">
-          <ChevronLeft className="w-1.5 h-1.5 text-inherit" />
+    <div className="flex flex-col items-center gap-1">
+      <div className="flex items-center gap-1 bg-background/60 backdrop-blur-sm rounded-full px-1.5 py-1 text-xs shadow-sm">
+        <button
+          onClick={handlePrevTheme}
+          className="w-4 h-4 flex items-center justify-center hover:opacity-70 transition-opacity text-muted-foreground"
+          aria-label="Previous theme"
+        >
+          -
         </button>
-
-        <span className="px-1 text-muted-foreground min-w-[48px] text-center">
-          {theme}
-        </span>
-
-        <button onClick={handleNextTheme} className="p-0.5 hover:opacity-70 transition-opacity">
-          <ChevronRight className="w-1.5 h-1.5 text-inherit" />
+        <button
+          onClick={handleNextTheme}
+          className="w-4 h-4 flex items-center justify-center hover:opacity-70 transition-opacity text-muted-foreground"
+          aria-label="Next theme"
+        >
+          +
         </button>
+        <span className="text-xs font-medium">{themeName}</span>
       </div>
-
-      {/* Light/Dark Toggle */}
-      <button
-        onClick={toggleMode}
-        className="p-1 bg-background/60 backdrop-blur-sm rounded-full hover:opacity-70 transition-opacity shadow-sm"
-        aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
-      >
-        {mode === 'dark' ? (
-          <Moon className="w-3 h-3" />
-        ) : (
-          <Sun className="w-3 h-3" />
-        )}
-      </button>
     </div>
   )
 }
